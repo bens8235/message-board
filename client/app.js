@@ -16,7 +16,9 @@ async function addElements(formData) {
   likeBtn.textContent = "👍";
 
   //fetching database info again to use it to create classname's to correspond to database
-  const response = await fetch("http://localhost:8080/messages");
+  const response = await fetch(
+    "https://message-board-server.onrender.com/messages"
+  );
   const messages = await response.json();
 
   let className = formData.id || messages[messages.length - 1].id;
@@ -43,7 +45,7 @@ async function addElements(formData) {
   //event listener for del button to delete entry and removing div from html.
 
   delBtn.addEventListener("click", async function () {
-    await fetch("http://localhost:8080/delete", {
+    await fetch("https://message-board-server.onrender.com/delete", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +64,7 @@ async function addElements(formData) {
     likeId = Number(likeId.slice(1)) + 1;
     likeBtn.className = `n${likeId}`;
     likes.textContent = likeId + "👍";
-    await fetch("http://localhost:8080/likes", {
+    await fetch("https://message-board-server.onrender.com/likes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +81,7 @@ form.addEventListener("submit", async function (event) {
   const formData = new FormData(form);
   const formValues = Object.fromEntries(formData);
 
-  await fetch("http://localhost:8080/messages", {
+  await fetch("https://message-board-server.onrender.com/messages", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -93,7 +95,9 @@ form.addEventListener("submit", async function (event) {
 //uses our database api to get database info and runs our addElements function  for each item in the database.
 
 async function getMessages() {
-  const response = await fetch("http://localhost:8080/messages");
+  const response = await fetch(
+    "https://message-board-server.onrender.com/messages"
+  );
   const messages = await response.json();
 
   for (let i = 0; i < messages.length; i++) {
